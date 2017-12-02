@@ -15,13 +15,15 @@
 # limitations under the License.
 #
 import webapp2
-import app.endpoints
+from app import endpoints
+
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         self.response.write('Hello Anh!')
 
+
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
-    ('/import_tracks', app.endpoints.ImportTracks)
+    ('/import_tracks', endpoints.SyncTracks)
 ], debug=True)
