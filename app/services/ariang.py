@@ -3,7 +3,7 @@ from app import utils
 from app.interfaces import DataSource
 
 
-class Site():
+class Site:
     def __init__(self):
         pass
 
@@ -15,8 +15,12 @@ class Site():
     ]
     PATTERN = r'window\.open\(\'(.+)\'\)'
 
+    @staticmethod
+    def format(url):
+        return Site.DOMAIN + '/' + url
 
-class Scraper():
+
+class Scraper:
 
     def __init__(self, pattern):
         self.pattern = pattern
@@ -39,15 +43,16 @@ class TrackDataSource(DataSource):
         self.data = []
 
     def load(self):
-        pages = [Site.DOMAIN + '/' + link for link in Site.LINKS]
+        pages = map(Site.format, Site.LINKS)
         self.data = reduce(lambda x, y: x + y,
-                           [self.scraper.scrape_page(page) for page in pages])
+                           [map(Site.format, self.scraper.scrape_page(page)) for page in pages])
 
     def get_iterator(self):
+        print(len(self.data))
         return iter(self.data)
 
 
-class Factory():
+class Factory:
     def __init__(self):
         pass
 

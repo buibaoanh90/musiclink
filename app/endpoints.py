@@ -1,13 +1,24 @@
 import webapp2
 import logging
 from app.services import ariang
+from app.services.ariang import Factory
 
 
 class SyncTracks(webapp2.RequestHandler):
     def get(self):
         logging.info('start syncing')
-        scraper = ariang.Scraper()
-        # url = 'http://www.google.com/humans.txt'
-        url = ariang.Site.DOMAIN + '/' + ariang.Site.LINKS[0]
 
-        self.response.write('start syncing: ' + scraper.fetch_url(url))
+        ds = Factory().get_data_source()
+        ds.load()
+        it = ds.get_iterator()
+        out = []
+        while True:
+            try:
+                val = it.next()
+                out.append(val)
+                print(val)
+            except StopIteration:
+                print("Iteration done.")
+                break
+
+        self.response.write('start syncing: ' + str(out))
