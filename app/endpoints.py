@@ -6,6 +6,8 @@ from app.services import ariang
 class SyncTracks(webapp2.RequestHandler):
     def get(self):
         logging.info('start syncing')
-        scraper = ariang.AriangScraper()
+        scraper = ariang.Scraper()
+        # url = 'http://www.google.com/humans.txt'
+        url = ariang.Site.DOMAIN + '/' + ariang.Site.LINKS[0]
 
-        self.response.write('start syncing: ' + scraper.fetch_url(ariang.AriangSite.DOMAIN + '/' + ariang.AriangSite.LINKS[0]))
+        self.response.write('start syncing: ' + scraper.fetch_url(url))
