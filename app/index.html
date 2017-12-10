@@ -8,8 +8,14 @@
 <body>
     <div class="container-fluid">
         <h1>Musiclink - Administrator</h1>
-        <form  method="get" action="/sync-tracks">
+        <form  method="get" action="/tasks/sync-tracks">
             <h4 class="text-primary">Sync Tracks</h4>
+            <div class="well ">
+                <button type="submit" class="btn btn-default">Enqueue task</button>
+            </div>
+        </form>
+        <form  method="get" action="/tasks/delete-tracks">
+            <h4 class="text-primary">Delete Tracks</h4>
             <div class="well ">
                 <button type="submit" class="btn btn-default">Enqueue task</button>
             </div>

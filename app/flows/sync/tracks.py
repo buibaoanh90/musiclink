@@ -1,5 +1,4 @@
 # coding=utf-8
-from app import configs
 from app.interfaces import Processor, Flow, Chain
 from app.models import Track
 from app.services.datastore import Bulk
@@ -15,7 +14,7 @@ class Tracks(Flow):
         chain = Chain()
         chain.add(Transformer()).add(Validator()).add(Normalizer()).add(Popularity()).add(Storage())
         ds = TrackDataSource()
-        ds.save(chain, 10000)
+        ds.save(chain, 1000)
         Bulk.get_instance().flush_all()
 
 
@@ -38,12 +37,12 @@ class Transformer(Processor):
 
     def transform(self, json):
         return Track(
-            json.get(self.AUTHOR, [''])[0],
-            json.get(self.LYRIC, [''])[0],
-            int(json[self.NUMBER][0]),
-            json.get(self.REF, [None])[0],
-            json[self.TITLE][0],
-            int(json.get(self.VOL, [0])[0]) if json.get(self.VOL, [0])[0] is not None else 0
+            author=json.get(self.AUTHOR, [''])[0],
+            lyric=json.get(self.LYRIC, [''])[0],
+            number=int(json[self.NUMBER][0]),
+            ref=json.get(self.REF, [None])[0],
+            title=json[self.TITLE][0],
+            vol=int(json.get(self.VOL, [0])[0]) if json.get(self.VOL, [0])[0] is not None else 0
         )
 
 

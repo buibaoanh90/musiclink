@@ -5,7 +5,7 @@ threadsafe: true
 service: worker
 
 handlers:
-- url: /sync-tracks
+- url: /tasks/(.+)
   script: main.app
   login: admin
 

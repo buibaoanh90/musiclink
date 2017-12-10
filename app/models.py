@@ -9,12 +9,4 @@ class Track(db.Model):
     title = db.StringProperty()
     vol = db.IntegerProperty()
     created = db.DateTimeProperty()
-
-    def __init__(self, author, lyric, number, ref, title, vol, parent=None, key_name=None):
-        db.Model.__init__(self, parent, key_name)
-        self.author = author
-        self.lyric = lyric
-        self.number = number
-        self.ref = ref
-        self.title = title
-        self.vol = vol
+    updated = db.DateTimeProperty()
