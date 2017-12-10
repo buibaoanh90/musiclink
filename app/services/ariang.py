@@ -4,6 +4,7 @@ from app.interfaces import DataSource
 
 
 class Site:
+
     def __init__(self):
         pass
 
