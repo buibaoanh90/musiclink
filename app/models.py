@@ -18,13 +18,3 @@ class Track(db.Model):
         self.ref = ref
         self.title = title
         self.vol = vol
-
-    def dict(self):
-        return {
-            'author': self.author,
-            'lyric': self.lyric,
-            'number': self.number,
-            'ref': self.ref,
-            'title': self.title,
-            'vol': self.vol
-        }

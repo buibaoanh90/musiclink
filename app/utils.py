@@ -2,7 +2,6 @@ import urllib2
 import logging
 import urllib
 import urlparse
-from google.appengine.ext import db
 
 
 def fetch_url(url):
@@ -25,10 +24,6 @@ def build_url(base_url, path, args_dict):
 
 def build_path(parts):
     return reduce(lambda x, y: x + '/' + y, parts)
-
-
-def encode(txt):
-    return txt
 
 
 def merge_two_dicts(x, y):

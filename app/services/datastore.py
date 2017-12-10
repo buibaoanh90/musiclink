@@ -1,6 +1,8 @@
 import datetime
 from google.appengine.ext import db
 
+from app import configs
+
 
 class DataStore:
     __instance = None
@@ -26,7 +28,6 @@ class DataStore:
 
 
 class Bulk:
-    SIZE = 100
     __instance = None
 
     def __init__(self):
@@ -50,7 +51,7 @@ class Bulk:
         self.flush_if_needed()
 
     def flush_if_needed(self):
-        self.flush_all(Bulk.SIZE)
+        self.flush_all(configs.BULK_SIZE)
 
     def flush_all(self, size=0):
         if len(self.entitiesToAdd) > size:

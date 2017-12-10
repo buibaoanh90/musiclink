@@ -25,5 +25,5 @@ class MainHandler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
-    ('/import_tracks', endpoints.SyncTracks)
+    ('/sync_tracks', endpoints.SyncTracks)
 ], debug=True)

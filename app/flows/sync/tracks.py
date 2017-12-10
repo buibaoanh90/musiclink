@@ -1,9 +1,9 @@
 # coding=utf-8
+from app import configs
 from app.interfaces import Processor, Flow, Chain
 from app.models import Track
 from app.services.datastore import Bulk
 from app.services.scrapinghub import TrackDataSource
-from app import utils
 
 
 class Tracks(Flow):
@@ -13,9 +13,9 @@ class Tracks(Flow):
 
     def run(self):
         chain = Chain()
-        chain.add(Transformer()).add(Normalizer()).add(Storage())
-        ds = TrackDataSource()
-        ds.save(chain, 150)
+        chain.add(Transformer()).add(Validator()).add(Normalizer()).add(Popularity()).add(Storage())
+        ds = TrackDataSource(configs.SPIDER_ID, configs.JOB_ID)
+        ds.save(chain)
         Bulk.get_instance().flush_all()
 
 
@@ -38,11 +38,11 @@ class Transformer(Processor):
 
     def transform(self, json):
         return Track(
-            utils.encode(json.get(self.AUTHOR, [''])[0]),
-            utils.encode(json.get(self.LYRIC, [''])[0]),
+            json.get(self.AUTHOR, [''])[0],
+            json.get(self.LYRIC, [''])[0],
             int(json[self.NUMBER][0]),
             json.get(self.REF, [None])[0],
-            utils.encode(json[self.TITLE][0]),
+            json[self.TITLE][0],
             int(json.get(self.VOL, [0])[0]) if json.get(self.VOL, [0])[0] is not None else 0
         )
 
@@ -74,6 +74,15 @@ class Storage(Processor):
         # logging.info(track.vol)
         bulk = Bulk.get_instance()
         bulk.add(track)
+
+
+class Validator(Processor):
+    def __init__(self):
+        Processor.__init__(self)
+        pass
+
+    def process(self, track):
+        self.process_next(track)
 
 
 class Popularity(Processor):

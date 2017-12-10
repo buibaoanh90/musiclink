@@ -2,15 +2,16 @@ import StringIO
 import json
 from app.interfaces import DataSource
 from app.models import Track
-from app import utils
+from app import utils, configs
 
 
 class API:
-    JL = 'jl'
+    JL = 'json'
     PROJECT_ID = '261462'
     KEY = 'f5914a42b48f467d96aa4e9db431f1b5'
     ITEMS = 'items'
     BASE_URL = 'https://storage.scrapinghub.com'
+    STATS = 'stats'
 
     def __init__(self):
         pass
@@ -29,30 +30,22 @@ class API:
 
 class TrackDataSource(DataSource):
     MAX_SIZE = 1000000
-    SCROLL_SIZE = 100
 
-    def __init__(self):
+    def __init__(self, spider_id, job_id):
         DataSource.__init__(self)
-        self.spider_id = '1'
-        self.job_id = '7'
+        self.spider_id = spider_id
+        self.job_id = job_id
 
     def save(self, processor, limit = -1):
         if limit < 0:
             limit = self.MAX_SIZE
-        for i in range(1, limit, TrackDataSource.SCROLL_SIZE):
-            response = self.scroll(i, min(limit - i, TrackDataSource.SCROLL_SIZE))
-            if len(response) < 0:
+        for i in range(1, limit, configs.SCROLL_SIZE):
+            response = self.scroll(i, min(limit - i + 1, configs.SCROLL_SIZE))
+            jsons = json.loads(response)
+            if len(jsons) == 0:
                 break
-            self.read(response, processor)
-
-    def read(self, response, processor):
-        buf = StringIO.StringIO(response)
-        line = buf.readline()
-        while len(line) > 0:
-            js = json.loads(line)
-            processor.process(js)
-            line = buf.readline()
-        buf.close()
+            for js in jsons:
+                processor.process(js)
 
     def scroll(self, i, size):
         endpoint = API.get_endpoint(
