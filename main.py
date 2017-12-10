@@ -18,12 +18,6 @@ import webapp2
 from app import endpoints
 
 
-class MainHandler(webapp2.RequestHandler):
-    def get(self):
-        self.response.write('Hello Anh!')
-
-
 app = webapp2.WSGIApplication([
-    ('/', MainHandler),
-    ('/sync_tracks', endpoints.SyncTracks)
+    ('/sync-tracks', endpoints.SyncTracks),
 ], debug=True)

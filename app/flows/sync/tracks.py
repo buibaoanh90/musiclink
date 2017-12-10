@@ -14,8 +14,8 @@ class Tracks(Flow):
     def run(self):
         chain = Chain()
         chain.add(Transformer()).add(Validator()).add(Normalizer()).add(Popularity()).add(Storage())
-        ds = TrackDataSource(configs.SPIDER_ID, configs.JOB_ID)
-        ds.save(chain)
+        ds = TrackDataSource()
+        ds.save(chain, 10000)
         Bulk.get_instance().flush_all()
 
 

@@ -1,0 +1,11 @@
+application: musiclink-187719
+runtime: python27
+api_version: 1
+threadsafe: true
+service: worker
+
+handlers:
+- url: /sync-tracks
+  script: main.app
+  login: admin
+
