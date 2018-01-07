@@ -5,9 +5,13 @@ api_version: 1
 threadsafe: yes
 
 handlers:
-- url: /favicon\.ico
-  static_files: favicon.ico
-  upload: favicon\.ico
+- url: /feed.txt
+  static_files: feed.txt
+  upload: feed.txt
+
+- url: /feeds/(.*)
+  static_files: feeds/\1
+  upload: feeds/(.*)
 
 - url: /tasks/(.+)
   script: main.app
