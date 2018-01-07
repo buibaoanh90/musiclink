@@ -3,6 +3,10 @@ import logging
 import urllib
 import urlparse
 
+import unicodedata
+
+import unidecode as unidecode
+
 
 def fetch_url(url):
     response = ''
@@ -30,3 +34,8 @@ def merge_two_dicts(x, y):
     z = x.copy()   # start with x's keys and values
     z.update(y)    # modifies z with y's keys and values & returns None
     return z
+
+
+def strip_accents(s):
+    return unidecode.unidecode(s)
+   # return ''.join((c for c in unicodedata.normalize('NFD', unicode(s)) if unicodedata.category(c) != 'Mn'))

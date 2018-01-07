@@ -13,6 +13,9 @@ handlers:
   script: main.app
   login: admin
 
+- url: /feed/(.+)
+  script: main.app
+
 - url: /
   static_files: app/index.html
   upload: app/index.html

@@ -1,4 +1,6 @@
 # coding=utf-8
+import logging
+
 from app.interfaces import Processor, Flow, Chain
 from app.models import Track
 from app.services.datastore import Bulk
@@ -14,7 +16,7 @@ class Tracks(Flow):
         chain = Chain()
         chain.add(Transformer()).add(Validator()).add(Normalizer()).add(Popularity()).add(Storage())
         ds = TrackDataSource()
-        ds.save(chain, 1000)
+        ds.save(chain)
         Bulk.get_instance().flush_all()
 
 

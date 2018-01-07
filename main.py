@@ -21,4 +21,6 @@ from app import endpoints
 app = webapp2.WSGIApplication([
     ('/tasks/sync-tracks', endpoints.SyncTracks),
     ('/tasks/delete-tracks', endpoints.DeleteTracks),
+    ('/tasks/test', endpoints.Test),
+    ('/feed/tracks', endpoints.TracksFeed),
 ], debug=True)

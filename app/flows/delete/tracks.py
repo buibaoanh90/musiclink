@@ -11,7 +11,7 @@ class Tracks(Flow):
         chain = Chain()
         chain.add(Storage())
         ds = TrackDataSource()
-        ds.save(chain, 1000)
+        ds.save(chain)
         Bulk.get_instance().flush_all()
 
 

@@ -20,9 +20,11 @@ class DataStore:
 
     def add(self, entity):
         entity.created = datetime.datetime.utcnow()
+        entity.updated = datetime.datetime.utcnow()
         entity.put()
 
     def update(self, entity):
+        entity.updated = datetime.datetime.utcnow()
         entity.put()
 
     def delete(self, entity):

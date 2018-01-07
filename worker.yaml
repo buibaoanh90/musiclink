@@ -1,5 +1,6 @@
 application: musiclink-187719
 runtime: python27
+version: 1
 api_version: 1
 threadsafe: true
 service: worker
